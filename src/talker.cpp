@@ -25,9 +25,9 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+#include <sstream>
 #include "ros/ros.h"
 #include "std_msgs/String.h"
-#include <sstream>
 
 /**
  * This tutorial demonstrates simple sending of messages over the ROS system.
