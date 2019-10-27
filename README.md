@@ -16,7 +16,7 @@ To run the package-
 2) catkin_ws workspace is properly setup.
 (If your workspace is named something else, use that name in the below commands)
 
-### How to build
+### How to build and run
 Download the package in the catkin_ws/src directory
 ```
 $ cd catkin_ws
