@@ -1,8 +1,8 @@
-# beginner_tutorials : First Publisher/Subscriber ROS package
+# First Publisher/Subscriber ROS package: beginner_tutorials
 
 ## Overview
 A new ROS package created as named beginner_tutorials. This has been achieved by following the [ROS Online Tutorials](http://wiki.ros.org/ROS/Tutorials/).
-A publisher node "talker" and a subscriber node "listener" has been created. A string is published over the topic "chatter", and is being subcribed by the listener.
+A publisher node "talker" and a subscriber node "listener" have been created. A string is published over the topic "chatter", and is being subcribed to by the listener node.
 
 ### Dependencies
 ```
@@ -16,7 +16,7 @@ To run the package-
 2) catkin_ws workspace is properly setup.
 (If your workspace is named something else, use that name in the below commands)
 
-# How to build
+### How to build
 Download the package in the catkin_ws/src directory
 ```
 $ cd catkin_ws
