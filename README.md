@@ -1,4 +1,6 @@
 # First Publisher/Subscriber ROS package: beginner_tutorials
+[![License](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)
+---
 
 ## Overview
 A new ROS package created as named beginner_tutorials. This has been achieved by following the [ROS Online Tutorials](http://wiki.ros.org/ROS/Tutorials/).
@@ -7,7 +9,7 @@ A publisher node "talker" and a subscriber node "listener" have been created. A 
 ### Dependencies
 ```
 ROS Kinetic
-Ubuntu 16.04
+Ubuntu 16.04 LTS
 ```
 
 ### Assumptions
