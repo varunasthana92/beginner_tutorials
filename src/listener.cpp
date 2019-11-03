@@ -34,13 +34,14 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include "ros/ros.h"
+#include "ros/console.h"
 #include "std_msgs/String.h"
 
 /**
  * This tutorial demonstrates simple receipt of messages over the ROS system.
  */
 void chatterCallback(const std_msgs::String::ConstPtr &msg) {
-  ROS_INFO("I listened to: [%s]", msg->data.c_str());
+  ROS_INFO_STREAM("I listened to: " << msg->data);
 }
 
 int main(int argc, char **argv) {
@@ -88,3 +89,4 @@ int main(int argc, char **argv) {
   ros::spin();
   return 0;
 }
+
