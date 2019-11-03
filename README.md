@@ -1,11 +1,10 @@
-# First Publisher/Subscriber ROS package: beginner_tutorials
+# ROS package: beginner_tutorials
 [![License](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)
 ---
 
 ## Overview
 A new ROS package created as named beginner_tutorials. This has been achieved by following the [ROS Online Tutorials](http://wiki.ros.org/ROS/Tutorials/).
-A publisher node "talker" and a subscriber node "listener" have been created. A string is published over the topic "chatter", and is being subcribed to by the listener node.
-Talker node calls upon a service change_string_output, by acting as an client. Based on the response of the service, the published string toggels between "Varun" and "Asthana".
+A publisher node "talker" and a subscriber node "listener" have been created. A string is published over the topic "chatter", and is being subcribed to by the listener node. Talker node calls upon a service change_string_output, by acting as an client. Based on the response of the service, the published string toggles between "Varun" and "Asthana".
 
 ### Dependencies
 ```
@@ -70,16 +69,15 @@ In a new terminal
 ```
 $ roslaunch beginner_tutorials beginner.launch
 ```
-1 window each for talker node and listener node will open-up. The defautl frequency for data publishing is set at 10. But this can be overwritten by a command line argument as below-
-(Do not forget to first end the above runninig roslaunch command with Ctrl + C )
+1 window each for the talker node and the listener node will open-up. The default frequency for data publishing is set at 10. But this can be overwritten by a command line argument as below. Do not forget to first end the above runninig roslaunch command with Ctrl + C.
 
 ```
 $ roslaunch beginner_tutorials beginner.launch pubpish_frequency:=4
 ```
 The argument publish_frequency is used to set the parameter value of /talker/freq. As before user may use any other non-negative value.
 
-### How are we getting different string output? Lets examine our service change_string_output
-A simple service server has been setup using the node change_string_server defined in ChangeStringServer.cpp. The request and response types for this service are defined in ChangeString.srv file, which is exactly same as below-
+### How are we getting different string outputs? Lets examine our service change_string_output
+A service server has been setup using the node change_string_server defined in ChangeStringServer.cpp. The request and response types for this service are defined in ChangeString.srv file, which is exactly same as below-
 ```
 bool choice
 ---
@@ -99,6 +97,8 @@ bool changeOutput(beginner_tutorials::ChangeString::Request &req, beginner_tutor
   return true;
 }
 ```
+In the talker node, the bool request is being toggled alternatively between TRUE and FALSE. Hence we were getting different output strings.
+
 #### Lets try and run this service using the rosservice command line tool
 In a new terminal
 ```
