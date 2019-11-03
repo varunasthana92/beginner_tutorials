@@ -1,5 +1,5 @@
 /**
- * @file change_string_server.cpp
+ * @file changeStringServer.cpp
  * @brief service server to choose a string response of the service "change_string_output"
  * @author Varun Asthana
  *
