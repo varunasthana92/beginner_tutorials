@@ -39,9 +39,6 @@
 #include "std_msgs/String.h"
 #include "beginner_tutorials/ChangeString.h"
 
-/**
- * This tutorial demonstrates simple sending of messages over the ROS system.
- */
 int main(int argc, char **argv) {
   /**
    * The ros::init() function needs to see argc and argv so that it can perform
@@ -94,13 +91,14 @@ int main(int argc, char **argv) {
       ROS_FATAL_STREAM("Could not get parameter " << paramName);
     }
     return 0;
-  } else if (freq == 0) {
+  } else if (freq <= 0) {
     while (ros::ok()) {
-      ROS_WARN_STREAM("Publish rate set to zero!!!");
+      ROS_WARN_STREAM("Publish rate should be more than zero!!!");
     }
     return 0;
   }
   ros::Rate loop_rate(freq);
+  ROS_DEBUG_STREAM("Publish rate set to " << freq);
   /**
    * A service client setup to send request to a
    * service named "change_string_output"
@@ -117,9 +115,7 @@ int main(int argc, char **argv) {
     /**
      * This is a message object. You stuff it with data, and then publish it.
      */
-    ROS_DEBUG_STREAM("Publish rate set to " << freq);
     std_msgs::String msg;
-    std::stringstream ss;
     srv.request.choice = a;
     /**
      * Call to service made and verifying if successful or not.
@@ -147,6 +143,6 @@ int main(int argc, char **argv) {
     loop_rate.sleep();
     ++count;
   }
-  return 0;
+  return 1;
 }
 
