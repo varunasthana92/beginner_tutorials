@@ -33,9 +33,11 @@
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-#include <sstream>
+
 #include "ros/ros.h"
+#include "ros/console.h"
 #include "std_msgs/String.h"
+#include "beginner_tutorials/ChangeString.h"
 
 /**
  * This tutorial demonstrates simple sending of messages over the ROS system.
@@ -77,31 +79,70 @@ int main(int argc, char **argv) {
    * than we can send them, the number here specifies how many messages to
    * buffer up before throwing some away.
    */
-  auto chatter_pub = n.advertise < std_msgs::String
-      > ("chatter", 1000);
-  ros::Rate loop_rate(10);
-
+  auto chatter_pub = n.advertise < std_msgs::String > ("chatter", 1000);
+  int freq;
+  const std::string paramName = "~freq";
+  bool check = ros::param::get(paramName, freq);
   /**
-   * A count of how many messages we have sent. This is used to create
-   * a unique string for each message.
+   * Conditional statement to check if the required parameter
+   * for publish frequency on the topic "chatter" has been
+   * defined or not. If defined, a verification put to see that the
+   * rate is not set to zero.
+   */
+  if (!check) {
+    while (ros::ok()) {
+      ROS_FATAL_STREAM("Could not get parameter " << paramName);
+    }
+    return 0;
+  } else if (freq == 0) {
+    while (ros::ok()) {
+      ROS_WARN_STREAM("Publish rate set to zero!!!");
+    }
+    return 0;
+  }
+  ros::Rate loop_rate(freq);
+  /**
+   * A service client setup to send request to a
+   * service named "change_string_output"
+   */
+  ros::ServiceClient client = n.serviceClient < beginner_tutorials::ChangeString
+      > ("change_string_output");
+  beginner_tutorials::ChangeString srv;
+  /**
+   * A count of how many messages we have sent.
    */
   int count = 0;
+  bool a = true;
   while (ros::ok()) {
     /**
      * This is a message object. You stuff it with data, and then publish it.
      */
+    ROS_DEBUG_STREAM("Publish rate set to " << freq);
     std_msgs::String msg;
     std::stringstream ss;
-    ss << "Varun Asthana UID 116696500 " << count;
-    msg.data = ss.str();
-    ROS_INFO("%s", msg.data.c_str());
+    srv.request.choice = a;
     /**
-     * The publish() function is how you send messages. The parameter
-     * is the message object. The type of this object must agree with the type
-     * given as a template parameter to the advertise<>() call, as was done
-     * in the constructor above.
+     * Call to service made and verifying if successful or not.
+     * If not, then a ROS_ERROR generated.
      */
-    chatter_pub.publish(msg);
+    if (client.call(srv)) {
+      msg.data = srv.response.name;
+      ROS_INFO_STREAM(msg << " Run count: " << count);
+      /**
+       * The publish() function is how you send messages. The parameter
+       * is the message object. The type of this object must agree with the type
+       * given as a template parameter to the advertise<>() call, as was done
+       * in the constructor above.
+       */
+      chatter_pub.publish(msg);
+    } else {
+      ROS_ERROR_STREAM("Failed to call service change_string_output");
+    }
+    /**
+     * Toggling the bool value of "a" to change output string in next call
+     * to the service.
+     */
+    a = !a;
     ros::spinOnce();
     loop_rate.sleep();
     ++count;
