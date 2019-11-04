@@ -47,7 +47,7 @@ In a new terminal
 $ rosparam set /talker/freq 10
 ```
 Here the "freq" refers to the frequency of ros::Rate which controls the rate at which the data is published on the topic "chatter".
-User can use any other non-negative value instead of 10.
+User can use any other positive value instead of 10.
 
 ```
 $ rosrun beginner_tutorials talker
@@ -74,7 +74,7 @@ $ roslaunch beginner_tutorials beginner.launch
 ```
 $ roslaunch beginner_tutorials beginner.launch publish_frequency:=4
 ```
-The argument publish_frequency is used to set the parameter value of /talker/freq. As before user may use any other non-negative value.
+The argument publish_frequency is used to set the parameter value of /talker/freq. As before user may use any other positive value.
 
 ### How are we getting different string outputs? Lets examine our service change_string_output
 A service server has been setup using the node change_string_server defined in ChangeStringServer.cpp. The request and response types for this service are defined in ChangeString.srv file, which is exactly same as below-
