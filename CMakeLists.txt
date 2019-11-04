@@ -107,6 +107,7 @@ catkin_package(
 #  LIBRARIES beginner_tutorials
 #  CATKIN_DEPENDS roscpp rospy std_msgs
 #  DEPENDS system_lib
+   CATKIN_DEPENDS message_runtime
 )
 
 ###########
