@@ -72,7 +72,7 @@ $ roslaunch beginner_tutorials beginner.launch
 1 window each for the talker node and the listener node will open-up. The default frequency for data publishing is set at 10. But this can be overwritten by a command line argument as below. Do not forget to first end the above runninig roslaunch command with Ctrl + C.
 
 ```
-$ roslaunch beginner_tutorials beginner.launch pubpish_frequency:=4
+$ roslaunch beginner_tutorials beginner.launch publish_frequency:=4
 ```
 The argument publish_frequency is used to set the parameter value of /talker/freq. As before user may use any other non-negative value.
 
@@ -126,4 +126,3 @@ Output is-
 ```
 name: "Asthana"
 ```
-
