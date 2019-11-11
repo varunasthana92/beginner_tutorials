@@ -1,8 +1,10 @@
 <launch>
   <arg name="publish_frequency" default="10" />
+  <arg name="record_data" default="1" />
   <node pkg="beginner_tutorials" type="change_string_server" name="change_string_server" respawn="true" />
   <node pkg="beginner_tutorials" type="talker" name="talker" launch-prefix="xterm -e" >
      <param name="freq" value ="$(arg publish_frequency)" />
   </node>
   <node pkg="beginner_tutorials" type="listener" name="listener" launch-prefix="xterm -e" />
+  <node pkg="rosbag" type="record" name="rosbag_record_data" args="-a -O $(find beginner_tutorials)/results/BagData" if="$(arg record_data)"/>
 </launch>
