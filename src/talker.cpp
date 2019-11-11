@@ -38,6 +38,7 @@
 #include "ros/console.h"
 #include "std_msgs/String.h"
 #include "beginner_tutorials/ChangeString.h"
+#include "tf/transform_broadcaster.h"
 
 int main(int argc, char **argv) {
   /**
@@ -76,7 +77,7 @@ int main(int argc, char **argv) {
    * than we can send them, the number here specifies how many messages to
    * buffer up before throwing some away.
    */
-  auto chatter_pub = n.advertise < std_msgs::String > ("chatter", 1000);
+  auto chatter_pub = n.advertise<std_msgs::String>("chatter", 1000);
   int freq;
   const std::string paramName = "~freq";
   bool check = ros::param::get(paramName, freq);
@@ -103,14 +104,16 @@ int main(int argc, char **argv) {
    * A service client setup to send request to a
    * service named "change_string_output"
    */
-  ros::ServiceClient client = n.serviceClient < beginner_tutorials::ChangeString
-      > ("change_string_output");
+  ros::ServiceClient client = n.serviceClient<beginner_tutorials::ChangeString>(
+      "change_string_output");
   beginner_tutorials::ChangeString srv;
   /**
    * A count of how many messages we have sent.
    */
   int count = 0;
   bool a = true;
+  tf::TransformBroadcaster br;
+  tf::Transform transform;
   while (ros::ok()) {
     /**
      * This is a message object. You stuff it with data, and then publish it.
@@ -139,6 +142,19 @@ int main(int argc, char **argv) {
      * to the service.
      */
     a = !a;
+    transform.setOrigin(tf::Vector3(1.0, 2.0, 0.0));
+    /**
+     * Setting rotation as 180 degrees
+     * i.e. 3.1415 radians (approx)
+     */
+    tf::Quaternion q;
+    q.setRPY(0, 0, 3.1415);
+    transform.setRotation(q);
+    /*
+     * Broadcasting the "talk" tf with "world" frame as its parent
+     */
+    br.sendTransform(
+        tf::StampedTransform(transform, ros::Time::now(), "world", "talk"));
     ros::spinOnce();
     loop_rate.sleep();
     ++count;
