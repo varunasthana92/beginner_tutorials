@@ -26,7 +26,7 @@ $ git clone https://github.com/varunasthana92/beginner_tutorials.git
 $ cd ..
 $ catkin_make
 ```
-## How to build and run test
+### How to build and run test
 ```
 $ cd catkin_ws/
 $ catkin_make run_tests
@@ -83,12 +83,12 @@ $ roslaunch beginner_tutorials beginner.launch publish_frequency:=4
 The argument publish_frequency is used to set the parameter value of /talker/freq. As before user may use any other positive value.
 
 #### Data recording by rosbag
-The launch file also has a tag to initiate data recording of all the topics in a bag file "BagData". By default this functionality is kept"ON", which will save a new .bag file (or replace any existing file with same name) on each time the launch file is executed  in /results directory once the launch command is terminated. User has the option to disable the recording of data by passing an argument set to 0 as below while running the launch file.
+The launch file also has a tag to initiate data recording of all the topics in a bag file "BagData". By default this functionality is kept"ON", which will save a new .bag file (or replace any existing file with same name) in /results directory, eaach tiime the launch file is executed. User has the option to disable the recording of data by passing an argument set to 0 as below while running the launch file.
 
 ```
 $ roslaunch beginner_tutorials beginner.launch record_data:=0
 ```
-Note: If user want, he may pass both arguments in a single line command.
+Note: If user wants, he may pass both arguments in a single line command.
 ```
 $ roslaunch beginner_tutorials beginner.launch record_data:=0 publish_frequency:=4
 ```
@@ -110,13 +110,13 @@ To see the data of the broadcasted frame, use the below command
 $ rosrun tf tf_echo world talk
 ```
 #### Inspecting and playing back the rosbag file
-Terminate all instances of the program and ros. Use the below set of commands to inspect the previously created BagData.bag file and playback the same with listener node without running the talker node. If your catkin_ws is located at someother path, use that.
+Terminate all instances of the program and ros. Use the below set of commands to inspect the previously created BagData.bag file and playback the same with listener node without running the talker node.
 
 In a new terminal
 ```
 $ roscore
 ```
-In a new terminal
+In a new terminal (If your catkin_ws is located at some other path, use that path)
 ```
 $ cd ~/catkin_ws
 $ cd /src/beginner_tutorials/results
@@ -148,7 +148,8 @@ $ rosrun beginner_tutorials listener
 ```
 Nothing will be displayed at the moment except a blinking cursor. This will change once we playback the data from our bag file.
 
-To play this bag file, use the below command in the same terminal in which we ran the rosbag info command-
+To play this bag file, use the below command.
+Use the same terminal in which we ran the rosbag info command, as we need to be in the directory where the file is available.
 ```
 $ rosbag play BagData.bag
 ```
