@@ -26,6 +26,10 @@ $ git clone https://github.com/varunasthana92/beginner_tutorials.git
 $ cd ..
 $ catkin_make
 ```
+### How to build and run test
+$ cd catkin_ws/
+$ catkin_make run_tests
+```
 ### How to run and interact with program
 There are 2 ways to run the program-
 1) Bring up each node individually via command line with required arguments, OR
@@ -75,6 +79,78 @@ $ roslaunch beginner_tutorials beginner.launch
 $ roslaunch beginner_tutorials beginner.launch publish_frequency:=4
 ```
 The argument publish_frequency is used to set the parameter value of /talker/freq. As before user may use any other positive value.
+
+#### Data recording by rosbag
+The launch file also has a tag to initiate data recording of all the topics in a bag file "BagData". By default this functionality is kept"ON", which will save a new .bag file (or replace any existing file with same name) on each time the launch file is executed  in /results directory once the launch command is terminated. User has the option to disable the recording of data by passing an argument set to 0 as below while running the launch file.
+
+```
+$ roslaunch beginner_tutorials beginner.launch record_data:=0
+```
+Note: If user want, he may pass both arguments in a single line command.
+```
+$ roslaunch beginner_tutorials beginner.launch record_data:=0 publish_frequency:=4
+```
+#### Inspecting TF Frame
+Ensure that the program is running either by launch command or manually as instructed above. A "talk" frame is broadcasted with "world" frame as its parent. rqt tree of the tf frames can be viewed in an interactive GUI with below command in a new terminal. 
+```
+$ rosrun rqt_tf_tree rqt_tf_tree
+```
+A pdf file for the same can be generated with below commands-
+```
+$ rosrun tf view_frames
+```
+To view the pdf-
+```
+$ evince frames.pdf
+```
+To see the data of the broadcasted frame, use the below command
+```
+$ rosrun tf tf_echo world talk
+```
+#### Inspecting and playing back the rosbag file
+Terminate all instances of the program and ros. Use the below set of commands to inspect the previously created BagData.bag file and playback the same with listener node without running the talker node. If your catkin_ws is located at someother path, use that.
+
+In a new terminal
+```
+$ roscore
+```
+In a new terminal
+```
+$ cd ~/catkin_ws
+$ cd /src/beginner_tutorials/results
+$ rosbag info BagData.bag
+```
+output will be something similar to-
+```
+path:        BagData.bag
+version:     2.0
+duration:    5.2s
+start:       Nov 10 2019 20:57:39.62 (1573437459.62)
+end:         Nov 10 2019 20:57:44.80 (1573437464.80)
+size:        73.2 KB
+messages:    288
+compression: none [1/1 chunks]
+types:       rosgraph_msgs/Log  [acffd30cd6b6de30f120938c17c593fb]
+             std_msgs/String    [992ce8a1687cec8c8bd883ec73ca41d1]
+             tf2_msgs/TFMessage [94810edda583a504dfda3829e70d7eec]
+topics:      /chatter       41 msgs    : std_msgs/String
+             /rosout       104 msgs    : rosgraph_msgs/Log  (3 connections)
+             /rosout_agg   102 msgs    : rosgraph_msgs/Log 
+             /tf            41 msgs    : tf2_msgs/TFMessage
+```
+Keep this terminal open, and we will come back to it.
+
+In a new terminal
+```
+$ rosrun beginner_tutorials listener
+```
+Nothing will be displayed at the moment except a blinking cursor. This will change once we playback the data from our bag file.
+
+To play this bag file, use the below command in the same terminal in which we ran the rosbag info command-
+```
+$ rosbag play BagData.bag
+```
+You can now see that the listener node is displaying the data it is reading from the pre-recorded data over the topic "chatter". Once the playback finishes, you may ternimate all instances of ros.
 
 ### How are we getting different string outputs? Lets examine our service change_string_output
 A service server has been setup using the node change_string_server defined in ChangeStringServer.cpp. The request and response types for this service are defined in ChangeString.srv file, which is exactly same as below-
