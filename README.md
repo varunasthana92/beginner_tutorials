@@ -16,7 +16,7 @@ Ubuntu 16.04 LTS
 To run the package-
 1) Above mentioned dependancies are available and running in the user's system.
 2) catkin_ws workspace is properly setup.
-(If your workspace is named something else, use that name in the below commands)
+(If your workspace is named something else or is at other path, use that name and/or path in the below commands)
 
 ### How to build the program
 Clone the package in the catkin_ws/src directory
@@ -30,6 +30,13 @@ $ catkin_make
 ```
 $ cd catkin_ws/
 $ catkin_make run_tests
+```
+### How to check cpplint and cppcheck
+Use the below commands to run cppcheck and cpplint.
+```
+$ cd ~/catkin_ws/src/beginner_tutorials
+$ cppcheck $( find . -name \*.hpp -or -name \*.cpp | grep -vE -e "^./build/" -e "^./test/" -e "^./docs/" -e "^./results" )
+$ cpplint $( find . -name \*.hpp -or -name \*.cpp | grep -vE -e "^./build/" -e "^./test/" -e "^./docs/" -e "^./results" )
 ```
 ### How to run and interact with program
 There are 2 ways to run the program-
