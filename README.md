@@ -18,7 +18,7 @@ To run the package-
 2) catkin_ws workspace is properly setup.
 (If your workspace is named something else, use that name in the below commands)
 
-### How to build
+### How to build the program
 Clone the package in the catkin_ws/src directory
 ```
 $ cd catkin_ws/src
@@ -26,7 +26,8 @@ $ git clone https://github.com/varunasthana92/beginner_tutorials.git
 $ cd ..
 $ catkin_make
 ```
-### How to build and run test
+## How to build and run test
+```
 $ cd catkin_ws/
 $ catkin_make run_tests
 ```
@@ -36,6 +37,7 @@ There are 2 ways to run the program-
 2) Use a launch file (provided) in the package to take care of everything.
 
 I will outline the steps for both methods.
+
 #### Run without the launch file
 ```
 $ roscore
