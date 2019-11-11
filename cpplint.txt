@@ -1,4 +1,5 @@
 Done processing ./src/changeStringServer.cpp
 Done processing ./src/talker.cpp
 Done processing ./src/listener.cpp
-Total errors found: 4
+Done processing ./test/test_talker.cpp
+Total errors found: 5
